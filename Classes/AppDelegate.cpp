@@ -1,18 +1,18 @@
 #include "AppDelegate.h"
-#include "StartupScene.h"
+#include "SplashScene.h"
 using namespace cocos2d;
 
 bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if (!glview) {
-        glview = GLView::create("Hex Bizarre");
+		glview = GLView::createWithRect("HexBizarre", Rect(0, 0, 960, 640));
         director->setOpenGLView(glview);
     }
 
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
-    auto scene = Startup::createScene();
+    auto scene = Splash::createScene();
     director->runWithScene(scene);
 
     return true;

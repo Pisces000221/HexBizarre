@@ -10,4 +10,7 @@
         return scene; \
     }
 
+#define TTF_CONFIG_R(__fontsize__) TTFConfig("fonts/ProximaNova-Regular.ttf", __fontsize__)
+#define TTF_CONFIG_B(__fontsize__) TTFConfig("fonts/ProximaNova-Bold.ttf", __fontsize__)
+
 #endif
