@@ -1,4 +1,5 @@
 #include "StartupScene.h"
+#include "GameScene.h"
 using namespace cocos2d;
 
 bool Startup::init()
@@ -28,4 +29,6 @@ bool Startup::init()
 void Startup::newGame(Ref *sender)
 {
     CCLOG("New game");
+    auto nextScene = GameLayer::createScene();
+    Director::getInstance()->replaceScene(TransitionFade::create(0.8, nextScene, Color3B(0, 0, 0)));
 }
