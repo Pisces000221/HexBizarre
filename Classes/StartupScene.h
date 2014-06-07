@@ -10,6 +10,8 @@ public:
     virtual bool init();  
     CREATE_FUNC(Startup);
     SCENE_FUNC(Startup);
+
+    void newGame(Ref *sender);
 };
 
 #endif
