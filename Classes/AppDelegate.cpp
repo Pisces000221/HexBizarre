@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "SplashScene.h"
+#include "StartupScene.h"
 using namespace cocos2d;
 
 bool AppDelegate::applicationDidFinishLaunching() {
@@ -12,7 +13,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
-    auto scene = Splash::createScene();
+    auto scene = Startup::createScene();
     director->runWithScene(scene);
 
     return true;
