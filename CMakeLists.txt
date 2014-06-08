@@ -42,6 +42,7 @@ endif()
 set(GAME_SRC
   proj.linux/main.cpp
   Classes/AppDelegate.cpp
+  Classes/HexagonLayer.cpp
   Classes/SplashScene.cpp
   Classes/StartupScene.cpp
   Classes/GameScene.cpp

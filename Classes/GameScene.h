@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 #include "Global.h"
+#include "HexagonLayer.h"
+#include <set>
 
 class GameLayer : public cocos2d::LayerColor
 {
@@ -12,11 +14,8 @@ public:
     SCENE_FUNC(GameLayer);
     void goBack(Ref *sender);
 
-    // we need: left, up-left, up-right, right
-    const int HEXAGON_RIGHT = 0;
-    const int HEXAGON_LEFT = 1 << 1;
-    const int HEXAGON_UP = 1 << 2;
-    void move(int direction);
+protected:
+    HexagonLayer *_hexLayer;
 };
 
 #endif
