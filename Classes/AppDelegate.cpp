@@ -3,7 +3,7 @@
 #include "StartupScene.h"
 using namespace cocos2d;
 
-#define _HB_DEBUG 0
+#define _HB_DEBUG 1
 
 bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();

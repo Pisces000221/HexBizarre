@@ -10,7 +10,7 @@ bool Startup::init()
 
     auto label_1 = Label::createWithTTF(TTF_CONFIG_B(64), "HEX\nBIZARRE", TextHAlignment::RIGHT);
     label_1->setAnchorPoint(Vec2(1, 0.5));
-    label_1->setPosition(Vec2(size.width - 24, size.height * 0.8));
+    label_1->setPosition(Vec2(size.width - 16, size.height * 0.8));
     this->addChild(label_1);
     // highlight 'bizarre'
     for (int i = 4; i < 11; i++) label_1->getLetter(i)->setColor(Color3B(32, 255, 32));

@@ -12,10 +12,11 @@ bool GameLayer::init()
     Vec2 centre = Vec2(size.width * 0.5, HEX_SIDE_LEN * 2.5);
 
     // a bigger i means a bigger y
-    for (int i = -centre.y / HEX_HEIGHT - 1; i <= (size.height - centre.y) / HEX_HEIGHT + 2; i++)
-        for (int j = -size.width * 0.5 / HEX_DIAMETRE - 2; j <= size.width * 0.5 / HEX_DIAMETRE + 2; j++) {
+    int max_j = (size.width * 0.5 - HEX_SIDE_LEN) / HEX_DIAMETRE + 1;
+    for (int i = -centre.y / HEX_HEIGHT - 1; i <= (size.height - centre.y) / HEX_HEIGHT + 1; i++)
+        for (int j = -max_j - abs(i) % 2; j <= max_j; j++) {
             Vec2 p;
-            if (i % 2) p = Vec2(j * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre;
+            if (!(i % 2)) p = Vec2(j * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre;
             else p = Vec2((j + 0.5) * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre;
             // create a solid hexagon (I'm too lazy to use a DrawNode)
             auto hf = Sprite::create("images/hexagon_fill.png");
@@ -27,10 +28,24 @@ bool GameLayer::init()
             hb->setPosition(p);
             this->addChild(hb, 1, HEXAGON_TAG(j, i));
         }
-    this->getChildByTag(HEXAGON_TAG(0, 0) - 9)->setColor(Color3B(255, 255, 0));
-    //this->runAction(ScaleTo::create(3, 0.5));
-    this->getChildByTag(HEXAGON_TAG(1, 1))->setColor(Color3B(255, 255, 0));
-    this->runAction(MoveTo::create(1, centre - this->getChildByTag(HEXAGON_TAG(1, 1))->getPosition()));
+    this->getChildByTag(HEXAGON_TAG(0, 0) - 9)->runAction(RepeatForever::create(Sequence::create(
+        TintTo::create(1.2, 255, 255, 0),
+        TintTo::create(1.2, 192, 192, 0), nullptr)));
+    this->move(HEXAGON_RIGHT | HEXAGON_UP);
 
     return true;
+}
+
+void GameLayer::move(int direction)
+{
+    Vec2 delta = Vec2::ZERO;
+    //CCLOG("%d, %d", direction, direction | HEXAGON_LEFT);
+    if (direction & HEXAGON_LEFT) delta.x += HEX_HEIGHT;
+    else delta.x -= HEX_HEIGHT;
+    if (direction & HEXAGON_UP) {
+        delta.y -= HEX_SIDE_LEN * 1.5;
+        delta.x *= 0.5;
+    }
+    //CCLOG("delta: (%f, %f)", delta.x, delta.y);
+    this->runAction(EaseSineOut::create(MoveBy::create(3, delta)));
 }
