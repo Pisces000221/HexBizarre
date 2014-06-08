@@ -37,7 +37,7 @@ bool GameLayer::init()
     // the back button
     auto backMenu = MenuItemImage::create("images/back.png", "images/back.png", "images/back.png",
         CC_CALLBACK_1(GameLayer::goBack, this));
-    backMenu->setAnchorPoint(Vec2(0, 1));
+    backMenu->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
     backMenu->setPosition(Vec2(0, size.height));
     auto menu = Menu::create(backMenu, nullptr);
     menu->setPosition(Vec2::ZERO);
