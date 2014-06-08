@@ -8,18 +8,21 @@ bool Splash::init()
 
     Size size = Director::getInstance()->getVisibleSize();
     auto sprite = Sprite::create("images/cocos2dx_portrait.png");
-    sprite->setAnchorPoint(Vec2(1, 0));
-    sprite->setPosition(Vec2(size.width + 24, -48));
+    sprite->setAnchorPoint(Vec2(0, 1));
+    sprite->setPosition(Vec2(-24, size.height + 48));
     sprite->setOpacity(144);
+    sprite->setScale(size.width * 0.9 / sprite->getTextureRect().size.width);
     this->addChild(sprite);
 
-    auto label_1 = Label::createWithTTF(TTF_CONFIG_R(56), "Powered by");
-    label_1->setPosition(Vec2(size.width * 0.25, size.height * 0.382));
+    auto label_1 = Label::createWithTTF(TTF_CONFIG_R(28), "Powered by");
+    label_1->setAnchorPoint(Vec2(0.5, 0));
+    label_1->setPosition(Vec2(size.width * 0.65, 48));
     label_1->setColor(Color3B(0, 0, 0));
     this->addChild(label_1);
 
-    auto label_2 = Label::createWithTTF(TTF_CONFIG_B(84), "Cocos2d-x");
-    label_2->setPosition(Vec2(size.width * 0.25, size.height * 0.382 - 64));
+    auto label_2 = Label::createWithTTF(TTF_CONFIG_B(42), "Cocos2d-x");
+    label_2->setAnchorPoint(Vec2(0.5, 0));
+    label_2->setPosition(Vec2(size.width * 0.65, 3));
     label_2->setColor(Color3B(0, 0, 0));
     this->addChild(label_2);
 

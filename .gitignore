@@ -1,4 +1,10 @@
 *~
 cocos2d/
 linux-build/
+proj.android/assets/
+proj.android/bin/
+proj.android/gen/
+proj.android/libs/
+proj.android/obj/
+proj.android/local.properties
 publish/
