@@ -10,6 +10,7 @@ public:
     virtual bool init();  
     CREATE_FUNC(GameLayer);
     SCENE_FUNC(GameLayer);
+    void goBack(Ref *sender);
 
     // we need: left, up-left, up-right, right
     const int HEXAGON_RIGHT = 0;

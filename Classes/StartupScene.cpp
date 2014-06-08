@@ -30,5 +30,13 @@ void Startup::newGame(Ref *sender)
 {
     CCLOG("New game");
     auto nextScene = GameLayer::createScene();
-    Director::getInstance()->replaceScene(TransitionFade::create(0.8, nextScene, Color3B(0, 0, 0)));
+    Director::getInstance()->pushScene(TransitionFade::create(0.8, nextScene, Color3B(0, 0, 0)));
+    auto cover = LayerColor::create(Color4B(0, 0, 0, 255));
+    cover->setOpacity(0);
+    this->addChild(cover, INT_MAX);
+    cover->runAction(Sequence::create(
+        DelayTime::create(0.8),
+        CallFunc::create([cover]() { cover->setOpacity(255); }),
+        FadeOut::create(0.4),
+        RemoveSelf::create(), nullptr));
 }
