@@ -3,6 +3,7 @@
 using namespace cocos2d;
 
 HexagonRegion::HexagonRegion()
+: _moveAction(DelayTime::create(0)), _moveDist(Vec2(0, 0))
 {
     _hexagons.reserve(16);
 }
@@ -62,11 +63,13 @@ void HexagonRegion::move(int direction)
     }
 
     // c'mon, move!
+    _moveDist = delta;
+    _moveAction = EaseSineOut::create(MoveBy::create(0.5, delta));
     for (auto cur : _hexagons) {
         Vec2 p = cur->getPosition();
         int odd = abs(cur->row % 2);
         cur->row += DELTA_ROW[odd]; cur->col += DELTA_COL[odd];
-        cur->runAction(EaseSineOut::create(MoveBy::create(0.5, delta)));
+        cur->runAction(_moveAction->clone());
     }
     // flush invisible hexagons away
     // don't worry, we'll get 'em back soon :)
@@ -77,7 +80,6 @@ void HexagonRegion::move(int direction)
           || p.y < -HEX_APOTHEM || p.y > size.height + HEX_APOTHEM) {
             cur->removeFromParent();
             this->erase(cur);
-            CCLOG("erased: %d, %d (0x%x), current find: 0x%x", cur->row, cur->col, cur, this->find(cur->row, cur->col));
         }
     }
     #undef ODD_LINE_DELTA_ROW

@@ -14,6 +14,7 @@ void HexagonLayer::refill()
 {
     Size size = Director::getInstance()->getVisibleSize();
     Vec2 centre = Vec2(size.width * 0.5, HEX_SIDE_LEN * 2.5);
+    Vec2 moveDist = _hr.getMoveDistance();
 
     // a bigger i means a bigger y
     int max_j = (size.width * 0.5 - HEX_SIDE_LEN) / HEX_DIAMETRE + 1;
@@ -23,26 +24,11 @@ void HexagonLayer::refill()
                 auto hexagon = Hexagon::create();
                 // if it's in an odd line (e.g. line 1 or line -1), move it right by half length
                 hexagon->setPosition(i % 2 == 0 ?
-                    Vec2(j * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre :
-                    Vec2((j + 0.5) * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre);
+                    Vec2(j * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre - moveDist :
+                    Vec2((j + 0.5) * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre - moveDist);
                 hexagon->row = i; hexagon->col = j;
                 _hr.insert(hexagon);
-                hexagon->initLabel();
-                hexagon->label->setColor(Color3B(0, 128, 255));
-                hexagon->setTag(2);
+                hexagon->runAction(_hr.getMoveAction());
                 this->addChild(hexagon);
-            } else {
-                CCLOG("skipping %d, %d (0x%x exists)", i, j, _hr.find(i, j));
-                _hr.find(i, j)->label->setColor(Color3B(255, 255, 0));
             }
-
-    for (auto hexagon : _hr.allHexagons()) {
-        char s[5]; sprintf(s, "%d", hexagon->col);
-        hexagon->label->setString(s);
-        if (hexagon->getTag() == 2) {
-            hexagon->setTag(0);
-        } else {
-            hexagon->label->setColor(Color3B(255, 255, 255));
-        }
-    }
 }

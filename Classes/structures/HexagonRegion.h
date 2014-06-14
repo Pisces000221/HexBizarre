@@ -24,8 +24,12 @@ public:
     void move(int direction);
 
     inline cocos2d::Vector<Hexagon *> allHexagons() { return _hexagons; }
+    inline cocos2d::ActionInterval *getMoveAction() { return _moveAction->clone(); }
+    inline cocos2d::Vec2 getMoveDistance() { return _moveDist; }
 protected:
     cocos2d::Vector<Hexagon *> _hexagons;
+    cocos2d::ActionInterval *_moveAction;
+    cocos2d::Vec2 _moveDist;
 };
 
 #endif
