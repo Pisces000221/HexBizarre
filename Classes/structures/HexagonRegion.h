@@ -4,6 +4,14 @@
 #include "cocos2d.h"
 #include "Hexagon.h"
 
+class HexagonDirection {
+public:
+    // we need: left, up-left, up-right, right
+    static const int RIGHT = 0;
+    static const int LEFT = 1 << 1;
+    static const int UP = 1 << 2;
+};
+
 class HexagonRegion
 {
 public:
@@ -13,10 +21,6 @@ public:
     void erase(Hexagon *obj);
     Hexagon *find(int row, int col);
 
-    // we need: left, up-left, up-right, right
-    const int HEXAGON_RIGHT = 0;
-    const int HEXAGON_LEFT = 1 << 1;
-    const int HEXAGON_UP = 1 << 2;
     void move(int direction);
 
     inline cocos2d::Vector<Hexagon *> allHexagons() { return _hexagons; }

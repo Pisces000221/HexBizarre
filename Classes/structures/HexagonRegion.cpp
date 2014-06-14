@@ -44,18 +44,18 @@ void HexagonRegion::move(int direction)
     #define DELTA_COL d[1]
 
     // calculate delta row & col
-    if (direction & HEXAGON_LEFT) {
+    if (direction & HexagonDirection::LEFT) {
         delta.x += HEX_HEIGHT;
         ALL_DELTA_COL = 1;
-    } else {
+    } else {    // moving right
         delta.x -= HEX_HEIGHT;
         ALL_DELTA_COL = -1;
     }
-    if (direction & HEXAGON_UP) {
+    if (direction & HexagonDirection::UP) {
         delta.y -= HEX_SIDE_LEN * 1.5;
         delta.x *= 0.5;
         ALL_DELTA_ROW = -1;
-        if (direction & HEXAGON_LEFT) EVEN_LINE_DELTA_COL = 0;
+        if (direction & HexagonDirection::LEFT) EVEN_LINE_DELTA_COL = 0;
         else ODD_LINE_DELTA_COL = 0;
     } else {
         ALL_DELTA_ROW = 0;
@@ -70,13 +70,14 @@ void HexagonRegion::move(int direction)
     }
     // flush invisible hexagons away
     // don't worry, we'll get 'em back soon :)
+    // see HexagonLayer::refill()
     for (auto cur : _hexagons) {
         Vec2 p = cur->getPosition();
-        bool x_outofborder = p.x < -HEX_SIDE_LEN || p.x > size.width + HEX_SIDE_LEN,
-            y_outofborder = p.y < -HEX_APOTHEM || p.y > size.height + HEX_APOTHEM;
-        if (x_outofborder || y_outofborder) {
+        if (p.x < -HEX_SIDE_LEN || p.x > size.width + HEX_SIDE_LEN
+          || p.y < -HEX_APOTHEM || p.y > size.height + HEX_APOTHEM) {
             cur->removeFromParent();
             this->erase(cur);
+            CCLOG("erased: %d, %d (0x%x), current find: 0x%x", cur->row, cur->col, cur, this->find(cur->row, cur->col));
         }
     }
     #undef ODD_LINE_DELTA_ROW

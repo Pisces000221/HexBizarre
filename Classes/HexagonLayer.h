@@ -13,6 +13,9 @@ public:
     SCENE_FUNC(HexagonLayer);
     void goBack(Ref *sender);
 
+    void move(int direction) { _hr.move(direction); }
+    void refill();
+
     inline HexagonRegion getHexagonRegion() { return _hr; }
 
 protected:

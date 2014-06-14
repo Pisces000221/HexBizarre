@@ -32,10 +32,12 @@ bool GameLayer::init()
     _listener->onTouchBegan = [=](Touch *touch, Event *event) {
         //Vec2 pos = touch->getLocation();
         // only for testing
-        _hexLayer->getHexagonRegion().move(rand() % 8);
+        _hexLayer->move(rand() % 8);
         _hexLayer->getHexagonRegion().find(0, 0)->runAction(RepeatForever::create(Sequence::create(
             EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
             EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
+        // check for missing tiles, get them back
+        _hexLayer->refill();
         return true;
     };
     _listener->onTouchMoved = [=](Touch *touch, Event *event) {
