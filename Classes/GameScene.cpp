@@ -14,7 +14,7 @@ bool GameLayer::init()
         EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
         EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
     _hexLayer->setPosition(Vec2(0, size.height * 0.618));
-    _hexLayer->runAction(EaseSineOut::create(MoveTo::create(3, Vec2::ZERO)));
+    _hexLayer->runAction(EaseSineOut::create(MoveTo::create(2, Vec2::ZERO)));
 
     // the back button
     auto backMenu = MenuItemImage::create("images/back.png", "images/back.png", "images/back.png",
@@ -24,29 +24,6 @@ bool GameLayer::init()
     auto menu = Menu::create(backMenu, nullptr);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1000);
-
-    // enable touching
-    auto _listener = EventListenerTouchOneByOne::create();
-    _listener->setSwallowTouches(true);
-    // get something advanced
-    _listener->onTouchBegan = [=](Touch *touch, Event *event) {
-        //Vec2 pos = touch->getLocation();
-        // only for testing
-        _hexLayer->move(rand() % 8);
-        _hexLayer->getHexagonRegion().find(0, 0)->runAction(RepeatForever::create(Sequence::create(
-            EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
-            EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
-        // check for missing tiles, get them back
-        _hexLayer->refill();
-        return true;
-    };
-    _listener->onTouchMoved = [=](Touch *touch, Event *event) {
-        //Vec2 pos = touch->getLocation();
-    };
-    _listener->onTouchEnded = [=](Touch *touch, Event *event) {
-        //Vec2 pos = touch->getLocation();
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(_listener, this);
 
     return true;
 }
