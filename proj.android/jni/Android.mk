@@ -11,7 +11,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/HexagonLayer.cpp \
                    ../../Classes/SplashScene.cpp \
                    ../../Classes/StartupScene.cpp \
-                   ../../Classes/GameScene.cpp
+                   ../../Classes/GameScene.cpp \
+                   ../../Classes/structures/Hexagon.cpp \
+                   ../../Classes/structures/HexagonRegion.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

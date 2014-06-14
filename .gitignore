@@ -1,4 +1,5 @@
 *~
+*.gch
 cocos2d/
 linux-build/
 proj.android/assets/

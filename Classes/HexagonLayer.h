@@ -3,24 +3,20 @@
 
 #include "cocos2d.h"
 #include "Global.h"
-#include <set>
+#include "structures/HexagonRegion.h"
 
 class HexagonLayer : public cocos2d::LayerColor
 {
 public:
-    virtual bool init();  
+    virtual bool init();
     CREATE_FUNC(HexagonLayer);
     SCENE_FUNC(HexagonLayer);
     void goBack(Ref *sender);
 
-    // we need: left, up-left, up-right, right
-    const int HEXAGON_RIGHT = 0;
-    const int HEXAGON_LEFT = 1 << 1;
-    const int HEXAGON_UP = 1 << 2;
-    void move(int direction);
+    inline HexagonRegion getHexagonRegion() { return _hr; }
 
 protected:
-    std::set<cocos2d::Sprite *> _hexagons;
+    HexagonRegion _hr;
 };
 
 #endif

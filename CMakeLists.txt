@@ -46,6 +46,8 @@ set(GAME_SRC
   Classes/SplashScene.cpp
   Classes/StartupScene.cpp
   Classes/GameScene.cpp
+  Classes/structures/Hexagon.cpp
+  Classes/structures/HexagonRegion.cpp
 )
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)

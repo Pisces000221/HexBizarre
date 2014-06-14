@@ -2,8 +2,6 @@
 #include "StartupScene.h"
 using namespace cocos2d;
 
-#define HEXAGON_TAG(i, j) (i * 23476 + j * 887 + 324500)
-
 bool GameLayer::init()
 {
     if (!LayerColor::initWithColor(Color4B(0, 0, 0, 255))) return false;
@@ -12,7 +10,7 @@ bool GameLayer::init()
     _hexLayer = HexagonLayer::create();
     this->addChild(_hexLayer);
 
-    _hexLayer->getChildByTag(HEXAGON_TAG(0, 0) - 9)->runAction(RepeatForever::create(Sequence::create(
+    _hexLayer->getHexagonRegion().find(0, 0)->runAction(RepeatForever::create(Sequence::create(
         EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
         EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
     _hexLayer->setPosition(Vec2(0, size.height * 0.618));
@@ -34,7 +32,10 @@ bool GameLayer::init()
     _listener->onTouchBegan = [=](Touch *touch, Event *event) {
         //Vec2 pos = touch->getLocation();
         // only for testing
-        _hexLayer->move(rand() % 8);
+        _hexLayer->getHexagonRegion().move(rand() % 8);
+        _hexLayer->getHexagonRegion().find(0, 0)->runAction(RepeatForever::create(Sequence::create(
+            EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
+            EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
         return true;
     };
     _listener->onTouchMoved = [=](Touch *touch, Event *event) {
