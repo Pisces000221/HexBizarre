@@ -1,5 +1,5 @@
 #include "Hexagon.h"
-#include "../Global.h"
+#include "Global.h"
 using namespace cocos2d;
 
 bool Hexagon::init()

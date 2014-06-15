@@ -1,5 +1,5 @@
 #include "StartupScene.h"
-#include "GameScene.h"
+#include "gameplay/Foggy.h"
 using namespace cocos2d;
 
 bool Startup::init()
@@ -16,7 +16,7 @@ bool Startup::init()
     for (int i = 4; i < 11; i++) label_1->getLetter(i)->setColor(Color3B(32, 255, 32));
 
     auto newGameMenu = MenuItemLabel::create(
-        Label::createWithTTF(TTF_CONFIG_R(36), "New Game"), CC_CALLBACK_1(Startup::newGame, this));
+        Label::createWithTTF(TTF_CONFIG_R(36), "Foggy"), CC_CALLBACK_1(Startup::newGame_Foggy, this));
     newGameMenu->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
     newGameMenu->setPosition(Vec2(24, size.height * 0.5));
     auto menu = Menu::create(newGameMenu, nullptr);
@@ -26,10 +26,10 @@ bool Startup::init()
     return true;
 }
 
-void Startup::newGame(Ref *sender)
+void Startup::newGame_Foggy(Ref *sender)
 {
-    CCLOG("New game");
-    auto nextScene = GameLayer::createScene();
+    CCLOG("New game - Foggy");
+    auto nextScene = hb_gameplay::Foggy::createScene();
     Director::getInstance()->pushScene(TransitionFade::create(0.8, nextScene, Color3B(0, 0, 0)));
     auto cover = LayerColor::create(Color4B(0, 0, 0, 255));
     cover->setOpacity(0);

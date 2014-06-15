@@ -10,12 +10,6 @@ bool GameLayer::init()
     _hexLayer = HexagonLayer::create();
     this->addChild(_hexLayer);
 
-    _hexLayer->getHexagonRegion().find(0, 0)->runAction(RepeatForever::create(Sequence::create(
-        EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
-        EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
-    _hexLayer->setPosition(Vec2(0, size.height * 0.618));
-    _hexLayer->runAction(EaseSineOut::create(MoveTo::create(2, Vec2::ZERO)));
-
     // the back button
     auto backMenu = MenuItemImage::create("images/back.png", "images/back.png", "images/back.png",
         CC_CALLBACK_1(GameLayer::goBack, this));

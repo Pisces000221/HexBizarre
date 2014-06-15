@@ -11,7 +11,6 @@ class GameLayer : public cocos2d::LayerColor
 public:
     virtual bool init();  
     CREATE_FUNC(GameLayer);
-    SCENE_FUNC(GameLayer);
     void goBack(Ref *sender);
 
 protected:

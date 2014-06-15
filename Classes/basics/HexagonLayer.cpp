@@ -34,6 +34,7 @@ bool HexagonLayer::init()
             moveDirection = HexagonDirection::LEFT | HexagonDirection::UP;
         else return false;
         this->move(moveDirection);
+        if (_onMove) _onMove(moveDirection);
         _hr.find(0, 0)->runAction(RepeatForever::create(Sequence::create(
             EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
             EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));

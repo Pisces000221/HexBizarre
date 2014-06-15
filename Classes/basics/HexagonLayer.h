@@ -4,14 +4,14 @@
 #include "cocos2d.h"
 #include "Global.h"
 #include "structures/HexagonRegion.h"
+#include <functional>
 
 class HexagonLayer : public cocos2d::LayerColor
 {
 public:
     virtual bool init();
     CREATE_FUNC(HexagonLayer);
-    SCENE_FUNC(HexagonLayer);
-    void goBack(Ref *sender);
+    void setCallbacks(std::function<void(int)> onMove) { _onMove = onMove; }
 
     void move(int direction) { _hr.move(direction); }
     void refill();
@@ -20,6 +20,8 @@ public:
 
 protected:
     HexagonRegion _hr;
+    std::function<void(int)> _onMove;
+
 };
 
 #endif

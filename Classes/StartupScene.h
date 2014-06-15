@@ -11,7 +11,7 @@ public:
     CREATE_FUNC(Startup);
     SCENE_FUNC(Startup);
 
-    void newGame(Ref *sender);
+    void newGame_Foggy(Ref *sender);
 };
 
 #endif

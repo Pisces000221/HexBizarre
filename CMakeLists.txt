@@ -42,17 +42,19 @@ endif()
 set(GAME_SRC
   proj.linux/main.cpp
   Classes/AppDelegate.cpp
-  Classes/HexagonLayer.cpp
   Classes/SplashScene.cpp
   Classes/StartupScene.cpp
-  Classes/GameScene.cpp
   Classes/structures/Hexagon.cpp
   Classes/structures/HexagonRegion.cpp
+  Classes/basics/HexagonLayer.cpp
+  Classes/basics/GameScene.cpp
+  Classes/gameplay/Foggy.cpp
 )
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 include_directories(
+  ${CMAKE_SOURCE_DIR}/Classes
   /usr/local/include/GLFW
   ${COCOS2D_ROOT}
   ${COCOS2D_ROOT}/cocos
