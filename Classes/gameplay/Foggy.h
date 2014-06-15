@@ -12,6 +12,9 @@ public:
     virtual bool init();  
     CREATE_FUNC(Foggy);
     SCENE_FUNC(Foggy);
+protected:
+    int _score;
+    cocos2d::Label *_scoreLabel;
 };
 
 }

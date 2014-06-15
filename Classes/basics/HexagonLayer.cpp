@@ -61,6 +61,8 @@ void HexagonLayer::refill()
     Vec2 centre = Vec2(size.width * 0.5, HEX_SIDE_LEN * 2.5);
     Vec2 moveDist = _hr.getMoveDistance();
 
+    // This IS Dad-tricking, I have to say.
+    // So, let's celebrate Fathers' Day through this Dad-tricking code!
     // a bigger i means a bigger y
     int max_j = (size.width * 0.5 - HEX_SIDE_LEN) / HEX_DIAMETRE + 1;
     for (int i = -centre.y / HEX_HEIGHT - 1; i <= (size.height - centre.y) / HEX_HEIGHT + 1; i++)
