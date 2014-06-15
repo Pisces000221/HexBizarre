@@ -3,7 +3,8 @@
 using namespace cocos2d;
 
 HexagonRegion::HexagonRegion()
-: _moveAction(DelayTime::create(0)), _moveDist(Vec2(0, 0))
+: _moveAction(DelayTime::create(0)), _moveDist(Vec2(0, 0)),
+ _lastMoveDirection(HexagonDirection::DIDNTMOVE)
 {
     _hexagons.reserve(16);
 }
@@ -32,6 +33,9 @@ Hexagon *HexagonRegion::find(int row, int col)
 
 void HexagonRegion::move(int direction)
 {
+    // prevent undefined behaviour
+    if (direction & HexagonDirection::DIDNTMOVE) return;
+
     Size size = Director::getInstance()->getVisibleSize();
     Vec2 delta = Vec2::ZERO;    // the move distance of every hexagon
     int d[2][2];    // the delta of row and column data. see below
@@ -65,6 +69,7 @@ void HexagonRegion::move(int direction)
     // c'mon, move!
     _moveDist = delta;
     _moveAction = EaseSineOut::create(MoveBy::create(0.5, delta));
+    _lastMoveDirection = direction;
     for (auto cur : _hexagons) {
         Vec2 p = cur->getPosition();
         int odd = abs(cur->row % 2);

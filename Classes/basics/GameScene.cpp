@@ -10,9 +10,12 @@ bool GameLayer::init()
     _hexLayer = HexagonLayer::create();
     this->addChild(_hexLayer);
 
-    _hexLayer->getHexagonRegion().find(0, 0)->runAction(RepeatForever::create(Sequence::create(
+    auto action = RepeatForever::create(Sequence::create(
         EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
-        EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
+        EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr));
+    action->setTag(HexagonLayer::REPEAT_CURRENT_POS_TINT_TAG);
+    _hexLayer->getHexagonRegion().find(0, 0)->runAction(action);
+    // slowly slide down at the very beginning
     _hexLayer->setPosition(Vec2(0, size.height * 0.618));
     _hexLayer->runAction(EaseSineOut::create(MoveTo::create(2, Vec2::ZERO)));
 

@@ -10,6 +10,7 @@ public:
     static const int RIGHT = 0;
     static const int LEFT = 1 << 1;
     static const int UP = 1 << 2;
+    static const int DIDNTMOVE = 1 << 7;
 };
 
 class HexagonRegion
@@ -26,10 +27,12 @@ public:
     inline cocos2d::Vector<Hexagon *> allHexagons() { return _hexagons; }
     inline cocos2d::ActionInterval *getMoveAction() { return _moveAction->clone(); }
     inline cocos2d::Vec2 getMoveDistance() { return _moveDist; }
+    inline int getLastMoveDirection() { return _lastMoveDirection; }
 protected:
     cocos2d::Vector<Hexagon *> _hexagons;
     cocos2d::ActionInterval *_moveAction;
     cocos2d::Vec2 _moveDist;
+    int _lastMoveDirection;
 };
 
 #endif

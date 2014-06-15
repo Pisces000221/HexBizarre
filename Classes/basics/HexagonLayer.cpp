@@ -34,12 +34,15 @@ bool HexagonLayer::init()
             moveDirection = HexagonDirection::LEFT | HexagonDirection::UP;
         else return false;
         this->move(moveDirection);
-        if (_onMove) _onMove(moveDirection);
-        _hr.find(0, 0)->runAction(RepeatForever::create(Sequence::create(
-            EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
-            EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr)));
         // check for missing tiles, get them back
         this->refill();
+        if (_onMove) _onMove(moveDirection);
+        // tint the hexagon at the current position of the player
+        auto action = RepeatForever::create(Sequence::create(
+            EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
+            EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr));
+        action->setTag(REPEAT_CURRENT_POS_TINT_TAG);
+        _hr.find(0, 0)->runAction(action);
         return true;
     };
     _listener->onTouchMoved = [=](Touch *touch, Event *event) {
@@ -63,7 +66,7 @@ void HexagonLayer::refill()
 
     // This IS Dad-tricking, I have to say.
     // So, let's celebrate Fathers' Day through this Dad-tricking code!
-    // a bigger i means a bigger y
+    // i, j means row and col
     int max_j = (size.width * 0.5 - HEX_SIDE_LEN) / HEX_DIAMETRE + 1;
     for (int i = -centre.y / HEX_HEIGHT - 1; i <= (size.height - centre.y) / HEX_HEIGHT + 1; i++)
         for (int j = -max_j - abs(i) % 2; j <= max_j; j++)
@@ -78,4 +81,47 @@ void HexagonLayer::refill()
                 hexagon->runAction(_hr.getMoveAction());
                 this->addChild(hexagon);
             }
+
+    // check if the entire map is moved up/down
+    // http://stackoverflow.com/questions/3884572/how-to-modify-key-values-in-stdmap-container
+    std::map<int, cocos2d::Color3B> t;
+    if (_hr.getLastMoveDirection() & HexagonDirection::UP) {
+        for (auto it = _tintRows.begin(); it != _tintRows.end(); ++it)
+            t[it->first - 1] = it->second;
+        _tintRows = t;
+    }
+    // ... and tint them all!
+    this->tintAllAskedRows();
+}
+
+void HexagonLayer::tintRow(int row, Color3B c)
+{
+    if (_tintRows.find(row) == _tintRows.end()) {
+        _tintRows[row] = c;
+        this->tintAllAskedRows();
+    }
+}
+
+void HexagonLayer::tintHexagon(int row, int col, Color3B c)
+{
+    auto target = _hr.find(row,col);
+    if (target) {
+        target->stopActionByTag(REPEAT_CURRENT_POS_TINT_TAG);
+        target->runAction(TintTo::create(0.3, c.r, c.g, c.b));
+    }
+}
+
+void HexagonLayer::tintAllAskedRows()
+{
+    // tint the rows that we're asked to tint
+    // http://stackoverflow.com/questions/4844886/how-to-loop-through-a-c-map
+    Size size = Director::getInstance()->getVisibleSize();
+    int max_col = (size.width * 0.5 - HEX_SIDE_LEN) / HEX_DIAMETRE + 1;
+    for (auto it = _tintRows.begin(); it != _tintRows.end(); ++it) {
+        int row = it->first;
+        if (_hr.find(row, 0))   // if this row did exist, we tint it
+            for (int col = -max_col - abs(row) % 2; col <= max_col; col++) tintHexagon(row, col, it->second);
+        else                    // otherwise we just remove it from the list
+            _tintRows.erase(it);
+    }
 }
