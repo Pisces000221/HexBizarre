@@ -33,16 +33,22 @@ bool HexagonLayer::init()
         else if (isInHexagon(pos, _hr.find(1, -1)->getPosition()))
             moveDirection = HexagonDirection::LEFT | HexagonDirection::UP;
         else return false;
+        CCLOG("HexagonLayer::init checkpoint 1");
         this->move(moveDirection);
+        CCLOG("HexagonLayer::init checkpoint 2");
         // check for missing tiles, get them back
         this->refill();
+        CCLOG("HexagonLayer::init checkpoint 3");
         if (_onMove) _onMove(moveDirection);
+        CCLOG("HexagonLayer::init checkpoint 4");
         // tint the hexagon at the current position of the player
         auto action = RepeatForever::create(Sequence::create(
             EaseSineInOut::create(TintTo::create(1.2, 255, 255, 0)),
             EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr));
         action->setTag(REPEAT_CURRENT_POS_TINT_TAG);
+        CCLOG("HexagonLayer::init checkpoint 5");
         _hr.find(0, 0)->runAction(action);
+        CCLOG("HexagonLayer::init checkpoint 6");
         return true;
     };
     _listener->onTouchMoved = [=](Touch *touch, Event *event) {
@@ -71,15 +77,21 @@ void HexagonLayer::refill()
     for (int i = -centre.y / HEX_HEIGHT - 1; i <= (size.height - centre.y) / HEX_HEIGHT + 1; i++)
         for (int j = -max_j - abs(i) % 2; j <= max_j; j++)
             if (!_hr.find(i, j)) {
+                CCLOG("HexagonLayer::init checkpoint %d, %d @0", i, j);
                 auto hexagon = Hexagon::create();
+                CCLOG("HexagonLayer::init checkpoint %d, %d @1", i, j);
                 // if it's in an odd line (e.g. line 1 or line -1), move it right by half length
                 hexagon->setPosition(i % 2 == 0 ?
                     Vec2(j * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre - moveDist :
                     Vec2((j + 0.5) * HEX_HEIGHT, i * HEX_SIDE_LEN * 1.5) + centre - moveDist);
                 hexagon->row = i; hexagon->col = j;
+                CCLOG("HexagonLayer::init checkpoint %d, %d @2", i, j);
                 _hr.insert(hexagon);
+                CCLOG("HexagonLayer::init checkpoint %d, %d @3", i, j);
                 hexagon->runAction(_hr.getMoveAction());
+                CCLOG("HexagonLayer::init checkpoint %d, %d @4", i, j);
                 this->addChild(hexagon);
+                CCLOG("HexagonLayer::init checkpoint %d, %d @5", i, j);
             }
 
     // check if the entire map is moved up/down

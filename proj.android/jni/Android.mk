@@ -8,12 +8,13 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/HexagonLayer.cpp \
                    ../../Classes/SplashScene.cpp \
                    ../../Classes/StartupScene.cpp \
-                   ../../Classes/GameScene.cpp \
                    ../../Classes/structures/Hexagon.cpp \
-                   ../../Classes/structures/HexagonRegion.cpp
+                   ../../Classes/structures/HexagonRegion.cpp \
+                   ../../Classes/basics/HexagonLayer.cpp \
+                   ../../Classes/basics/GameScene.cpp \
+                   ../../Classes/gameplay/Foggy.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
