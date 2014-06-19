@@ -15,6 +15,7 @@ bool GameLayer::init()
         EaseSineInOut::create(TintTo::create(1.2, 192, 192, 0)), nullptr));
     action->setTag(HexagonLayer::REPEAT_CURRENT_POS_TINT_TAG);
     _hexLayer->getHexagonRegion().find(0, 0)->runAction(action);
+    _hexLayer->getHexagonRegion().find(0, 0)->setTag(HexagonLayer::CANNOT_BE_TINTED);
     // slowly slide down at the very beginning
     _hexLayer->setPosition(Vec2(0, size.height * 0.618));
     _hexLayer->runAction(EaseSineOut::create(MoveTo::create(2, Vec2::ZERO)));

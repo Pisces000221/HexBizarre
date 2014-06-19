@@ -4,7 +4,7 @@ using namespace cocos2d;
 
 HexagonRegion::HexagonRegion()
 : _moveAction(DelayTime::create(0)), _moveDist(Vec2(0, 0)),
- _lastMoveDirection(HexagonDirection::DIDNTMOVE)
+ _lastMoveDirection(HexagonDirection::DIDNTMOVE), _curLine(0)
 {
     _hexagons.reserve(16);
 }
@@ -70,6 +70,7 @@ void HexagonRegion::move(int direction)
     _moveDist = delta;
     _moveAction = EaseSineOut::create(MoveBy::create(0.5, delta));
     _lastMoveDirection = direction;
+    _curLine += DELTA_ROW[0];   // any of it is okay
     for (auto cur : _hexagons) {
         Vec2 p = cur->getPosition();
         int odd = abs(cur->row % 2);

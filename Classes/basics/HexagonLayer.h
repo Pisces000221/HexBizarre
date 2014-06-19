@@ -14,6 +14,7 @@ public:
     CREATE_FUNC(HexagonLayer);
     void setCallbacks(std::function<void(int)> onMove) { _onMove = onMove; }
     static const int REPEAT_CURRENT_POS_TINT_TAG = 147106;
+    static const int CANNOT_BE_TINTED = 12138;
 
     void move(int direction) { _hr.move(direction); }
     void refill();
