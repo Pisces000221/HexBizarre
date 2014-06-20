@@ -36,6 +36,7 @@ bool HexagonLayer::init()
         this->move(moveDirection);
         // check for missing tiles, get them back
         this->refill();
+        // callback
         if (_onMove) _onMove(moveDirection);
         // tint the hexagon at the current position of the player
         auto action = RepeatForever::create(Sequence::create(

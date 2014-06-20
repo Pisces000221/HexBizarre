@@ -2,6 +2,9 @@
 #include "Global.h"
 using namespace cocos2d;
 
+Hexagon::Hexagon() {}
+Hexagon::~Hexagon() { CCLOG("~Hexagon"); this->removeAllChildren(); }
+
 bool Hexagon::init()
 {
     // create a solid hexagon (I'm too lazy to use a DrawNode)

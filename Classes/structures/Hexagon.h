@@ -6,6 +6,8 @@
 class Hexagon : public cocos2d::Sprite
 {
 public:
+    Hexagon();
+    ~Hexagon();
     virtual bool init();
     CREATE_FUNC(Hexagon);
     bool initLabel();

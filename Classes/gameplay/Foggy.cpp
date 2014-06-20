@@ -9,6 +9,7 @@ bool Foggy::init()
 
     Size size = Director::getInstance()->getVisibleSize();
     _hexLayer->setCallbacks([this](int direction) {
+        CCLOG("current children count: %d", this->getChildren().size());
         // refresh score display
         char s[10]; sprintf(s, "%d", ++_score);
         _scoreLabel->runAction(Sequence::create(

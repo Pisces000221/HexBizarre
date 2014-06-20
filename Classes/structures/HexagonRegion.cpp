@@ -84,8 +84,10 @@ void HexagonRegion::move(int direction)
         Vec2 p = cur->getPosition();
         if (p.x < -HEX_SIDE_LEN || p.x > size.width + HEX_SIDE_LEN
           || p.y < -HEX_APOTHEM || p.y > size.height + HEX_APOTHEM) {
-            cur->removeFromParent();
             this->erase(cur);
+            cur->stopAllActions();
+            cur->removeAllChildren();
+            cur->removeFromParentAndCleanup(false);
         }
     }
     #undef ODD_LINE_DELTA_ROW
